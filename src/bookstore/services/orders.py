@@ -21,6 +21,7 @@ class OrderService:
             book = self.books.get(book_id)
             if book is None:
                 raise LookupError(f"Книгу {book_id} не знайдено")
+            # онлайн-замовлення комплектується зі складу, залишок залу резервується окремо (FR-2.4, FR-5.1)
             check_available(book.title, qty, book.stock_warehouse)
             lines.append(Line(Decimal(book.price), qty))
             rows.append((book, qty))
