@@ -38,10 +38,10 @@ docs/            проєктна документація
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-PYTHONPATH=src uvicorn bookstore.main:app --reload
+PYTHONPATH=src uvicorn bookstore.main:app --reload --port 8080
 ```
 
-Документація API: http://127.0.0.1:8000/docs
+Документація API: http://127.0.0.1:8080/docs
 
 ## Тести
 
