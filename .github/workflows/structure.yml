@@ -1,0 +1,28 @@
+name: Project structure check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  structure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check required files and folders
+        run: |
+          for p in README.md .gitignore requirements.txt docs src/bookstore tests; do
+            test -e "$p" && echo "OK  $p" || { echo "MISSING $p"; exit 1; }
+          done
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run tests
+        run: PYTHONPATH=src python -m unittest discover -s tests -v
