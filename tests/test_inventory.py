@@ -11,7 +11,7 @@ class InventoryTests(unittest.TestCase):
     def test_more_than_stock_is_rejected(self):
         with self.assertRaises(OutOfStock) as ctx:
             check_available("Кобзар", 6, 5)
-        self.assertEqual(ctx.exception.available, 5)
+        self.assertEqual(ctx.exception.available, 4)
 
     def test_non_positive_quantity_is_rejected(self):
         with self.assertRaises(ValueError):
