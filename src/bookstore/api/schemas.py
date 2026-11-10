@@ -14,3 +14,21 @@ class BookIn(BaseModel):
 
 class BookOut(BookIn):
     id: int
+
+
+class OrderItemIn(BaseModel):
+    book_id: int
+    quantity: int
+
+
+class OrderIn(BaseModel):
+    items: list[OrderItemIn]
+    customer_id: int | None = None
+    use_bonus: bool = False
+
+
+class OrderOut(BaseModel):
+    id: int
+    status: str
+    total: Decimal
+    bonus_spent: Decimal
