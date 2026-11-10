@@ -22,6 +22,19 @@ class ApiTests(unittest.TestCase):
         self.client.post("/books", json=BOOK)
         self.assertEqual(self.client.post("/books", json=BOOK).status_code, 422)
 
+    def test_order_more_than_stock_is_rejected(self):
+        book_id = self.client.post("/books", json=BOOK).json()["id"]
+        r = self.client.post("/orders", json={"items": [{"book_id": book_id, "quantity": 4}]})
+        self.assertEqual(r.status_code, 409)
+        self.assertIn("доступно 3", r.json()["detail"])
+
+    def test_order_reduces_stock(self):
+        book_id = self.client.post("/books", json=BOOK).json()["id"]
+        r = self.client.post("/orders", json={"items": [{"book_id": book_id, "quantity": 3}]})
+        self.assertEqual(r.json()["total"], "750.00")
+        again = self.client.post("/orders", json={"items": [{"book_id": book_id, "quantity": 1}]})
+        self.assertEqual(again.status_code, 409)
+
 
 if __name__ == "__main__":
     unittest.main()
