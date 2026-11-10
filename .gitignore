@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Локальні дані та секрети
+*.db
+.env
+dist/
+
+# IDE та ОС
+.idea/
+.vscode/
+.DS_Store
+
+# Службові файли інструментів
+.omc/
+.claude/
